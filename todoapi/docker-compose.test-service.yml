@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  web:
+    container_name: gotodoapi
+    build: .
+    ports:
+      - "8080:8080"
+  test:
+    container_name: servicetest
+    depends_on:
+      - web
+    image: postman/newman:latest
+    volumes:
+      - ./test/service:/etc/newman
+    command: run gotodoapi.postman_collection.json -e docker_compose.postman_environment.json

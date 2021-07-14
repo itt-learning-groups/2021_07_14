@@ -1,0 +1,818 @@
+{
+	"info": {
+		"_postman_id": "77e00237-4d56-413e-8842-4971cad247c9",
+		"name": "GoTodoApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "env:local",
+			"item": [
+				{
+					"name": "/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Welcome to the Learn and DevOps ToDo App!\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/echo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Request body is echoed in response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.key1).to.eql(\"val1\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key1\": \"val1\"\n}"
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/echo",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"echo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/echo/{param}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Request url parameter is echoed in response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.param).to.eql(\"paramval\");",
+									"});",
+									"",
+									"pm.test(\"Request body is echoed in response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.reqBody.key1).to.eql(\"val1\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key1\": \"val1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/echo/paramval",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"echo",
+								"paramval"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'ID' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.not.eql(\"\");",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'name' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"shopping\");",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'description' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).to.eql(\"get milk and eggs\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"shopping\",\n    \"description\": \"get milk and eggs\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo (validation test 1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Missing description field passes request validation\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'ID' field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.not.eql(\"\");",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'name' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"read\");",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'description' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).to.eql(\"\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"read\",\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo (validation test 2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Missing name field fails request validation\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"catch up on reading\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const createdID = pm.environment.get(\"createdID\");",
+									"const createdName = pm.environment.get(\"createdName\");",
+									"const createdDesc = pm.environment.get(\"createdDesc\");",
+									"",
+									"const getAllResponse = pm.response.json();",
+									"const list = getAllResponse.list;",
+									"",
+									"pm.test(\"Created Todo item appears in Todo list\", () => {",
+									"    pm.expect(list.length).to.be.greaterThan(0);",
+									"",
+									"    let match = false;",
+									"    for (let i = 0; i < list.length; i++) {",
+									"        todo = list[i];",
+									"        if (todo.id === createdID && todo.name === createdName && todo.description === createdDesc) {",
+									"            match = true;",
+									"        }",
+									"    }",
+									"",
+									"    pm.expect(match).to.be.true;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/todo`,",
+									"    method: 'POST',",
+									"    header: { 'content-type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ \"name\": \"dinner\", \"description\": \"make dinner\" }),",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"    var jsonData = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"    else {",
+									"        pm.environment.set(\"createdID\", jsonData.id);",
+									"        pm.environment.set(\"createdName\", jsonData.name);",
+									"        pm.environment.set(\"createdDesc\", jsonData.description);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/list",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo/{name}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const createdID = pm.environment.get(\"createdID\");",
+									"",
+									"pm.test(\"Response contains expected 'id' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(createdID);",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'name' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"do laundry\");",
+									"});",
+									"",
+									"pm.test(\"Response contains expected 'description' value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).to.eql(\"wash clothes\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/todo`,",
+									"    method: 'POST',",
+									"    header: { 'content-type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ \"name\": \"laundry\", \"description\": \"wash clothes\" }),",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"    var jsonData = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"    else {",
+									"        pm.environment.set(\"createdID\", jsonData.id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"do laundry\",\n    \"description\": \"wash clothes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo/laundry",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo",
+								"laundry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo/{name} (failure case 1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Edit fails if the todo is not already in the list\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"do laundry\",\n    \"description\": \"wash clothes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo/laundry%20task",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo",
+								"laundry%20task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo/{name}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const createdID = pm.environment.get(\"createdID\");",
+									"",
+									"const options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/list`,",
+									"    method: 'GET',",
+									"    header: { 'content-type': 'application/json' }",
+									"};",
+									"",
+									"pm.sendRequest(options, (err, res) => {",
+									"    const getAllResponse = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"    const list = getAllResponse.list;",
+									"",
+									"    pm.test(\"Given Todo was deleted from Todo list\", () => {",
+									"        let match = false;",
+									"        for (let i = 0; i < list.length; i++) {",
+									"            todo = list[i];",
+									"            if (todo.id === createdID) {",
+									"                match = true;",
+									"            }",
+									"        }",
+									"",
+									"        pm.expect(match).to.be.false;",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/todo`,",
+									"    method: 'POST',",
+									"    header: { 'content-type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ \"name\": \"dishes\", \"description\": \"do dishes\" }),",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"    var jsonData = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"    else {",
+									"        pm.environment.set(\"createdID\", jsonData.id);",
+									"    }",
+									"});",
+									"",
+									"options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/todo`,",
+									"    method: 'POST',",
+									"    header: { 'content-type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ \"name\": \"mop\", \"description\": \"mop the floor\" }),",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"    var jsonData = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo/dishes",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo",
+								"dishes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/todo/{name} (failure case 1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete fails if the todo is not already in the list\", () => {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/todo/sweep",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"todo",
+								"sweep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/clear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/list`,",
+									"    method: 'GET',",
+									"    header: { 'content-type': 'application/json' }",
+									"};",
+									"",
+									"pm.sendRequest(options, (err, res) => {",
+									"    const getAllResponse = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"",
+									"    pm.test(\"Todo list is empty\", () => {",
+									"        pm.expect(getAllResponse.length).to.be.undefined;",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/create`,",
+									"    method: 'POST',",
+									"    header: { 'content-type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ \"name\": \"dust\", \"description\": \"dust the livingroom\" }),",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"    var jsonData = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"});",
+									"",
+									"options = {",
+									"    url: `${pm.environment.get(\"serverAddr\")}:${pm.environment.get(\"serverPort\")}/create`,",
+									"    method: 'POST',",
+									"    header: { 'content-type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ \"name\": \"iron\", \"description\": \"iron the shirts\" }),",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"    var jsonData = res.json();",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{serverAddr}}:{{serverPort}}/clear",
+							"protocol": "http",
+							"host": [
+								"{{serverAddr}}"
+							],
+							"port": "{{serverPort}}",
+							"path": [
+								"clear"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
