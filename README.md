@@ -16,7 +16,7 @@
 
 ### 1. Setup
 
-* Clone the `todoapi` project [here](https://github.com/us-learn-and-devops/2021_07_07/tree/master) (from last week) if you need to.
+* Clone the `todoapi` project [here](https://github.com/us-learn-and-devops/2021_07_14/tree/wip/todoapi) if you need to. Nothing has changed since last week, except that I did add a couple of very small convenience shell scripts in the /build folder you may find handy for easily deploying/destroying the cluster and standing up the starter todoapi pod deployment: [cluster-deploy.sh](https://github.com/us-learn-and-devops/2021_07_14/blob/wip/todoapi/build/cluster-deploy.sh), [cluster-destroy.sh](https://github.com/us-learn-and-devops/2021_07_14/blob/wip/todoapi/build/cluster-destroy.sh), and [k8s/deploy.sh](https://github.com/us-learn-and-devops/2021_07_14/blob/wip/todoapi/build/k8s/deploy.sh).
 * Add AWS creds to your terminal session and start up your cluster. You can use the `cluster-deploy.sh` script if you like.
 * Deploy the todoapi `deployment` and `service` from where we left off last week. You can use the `k8s/deploy.sh` script if you like.
 
