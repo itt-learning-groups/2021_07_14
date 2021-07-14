@@ -129,18 +129,18 @@ OK. Assuming we've now understood the problem, how can we fix it?
 
 Here's one way to try. It's doomed in this particular case, but it will give us an opportunity to further investigate the way a deployment rollout works:
 
-The todoapi pods belong to a `deployment`, and the whole point of a `deployment` is that it's a `replicaSet` that has a deployment "strategy", like "rollout".
+The todoapi pods belong to a `deployment`, and the whole point of a `deployment` is that it's a `replicaSet` that has a deployment "strategy", like "RollingUpdate".
 
 We've seen rollout in action while updating our deployment earlier.
 
-We haven't specified a deployment strategy, so we're getting the default rollout strategy with its default settings.
+We haven't specified a deployment strategy, so we're getting the default RollingUpdate strategy with its default settings.
 
 * Describe the deployment. You should see "RollingUpdateStrategy:  25% max unavailable, 25% max surge". This corresponds to adding a `spec.strategy` like the following to our deployment.yaml:
 
+      type: RollingUpdate
       rollingUpdate:
         maxSurge: 25%
         maxUnavailable: 25%
-      type: RollingUpdate
 
 (Note that you can also choose a non-default "Recreate" deployment strategy that terminates *all* pods in the replicaSet before deploying their replacements: I.e. you get a momentary service interruption. RollingUpdate is specifically designed to avoid that.)
 
@@ -156,7 +156,7 @@ That means that we should be able to roll back the deployment using a `rollout u
 * Try `kubectl rollout undo deployment todoapi`. You should get a success message... and ordinarily this would work. But we've still got a problem to solve.
 * List/watch your pods again and see what's happening. You should see that the situation is now worse than before!
 
-(The problem is that rollback will try to replay the previous successful rollout in the deployment's rollout history. Describe the deployment and check its "events" log to understand what has happened.)
+(The problem is that a rollback will try to replay the previous successful rollout in the deployment's rollout history. Describe the deployment and check its "events" log to understand what has happened.)
 
 The real problem is that we're simply too close to our limits on these nodes to be able to rollback: There's not enough room.
 
