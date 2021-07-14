@@ -12,6 +12,8 @@
 
 ## Lab
 
+(Warning: Since we bumped the Jul 14 meeting, some details of the following might end up changing by Jul 21 if I fiddle with it in the meantime.)
+
 ### 1. Setup
 
 * Clone the `todoapi` project [here](https://github.com/us-learn-and-devops/2021_07_07/tree/master) (from last week) if you need to.
@@ -177,27 +179,40 @@ We can manually scale our worker-node node group, however.
 
 | k8s object/concept                            |            | exercise/demo                               | tentative date |
 | --------------------------------------------- | ---------- | ------------------------------------------- | -------------- |
-| pod                                           | (k8s core) |                                             |                |
-| replica set                                   | (k8s core) |                                             |                |
-| deployment                                    | (k8s core) |                                             |                |
+| pod                                           | (k8s core) |                                             | (This is       |
+| replica set                                   | (k8s core) |                                             | what we're     |
+| deployment                                    | (k8s core) |                                             | covering now.) |
 | service & endpoints                           | (k8s core) |                                             |                |
-| labels                                        |            | * Add multiple                              | Jul 21         |
+|                                               |            |                                             |                |
+| labels                                        |            | * Add multiple                              | Jul 28         |
 | namespaces                                    |            | environments to                             |                |
 | config maps                                   |            | todoapi deployment                          |                |
 | ingress/controller                            |            | * Add ingress to todoapi                    |                |
-| secrets                                       |            | * Add DB to todoapi                         | Jul 28         |
+|                                               |            |                                             |                |
+| secrets                                       |            | * Add DB to todoapi                         | Aug 04         |
 |                                               |            | * Add TLS to todoapi                        |                |
 |                                               |            | * Add private Docker repo to todoapi        |                |
 | service-to-service comm'n                     |            | * Add additional services to todoapi envs   |                |
-|                                               | <--------- | "class" exercise ----------------------->   | Aug 04         |
-| daemon sets                                   |            | * Add logging/metrics to nodes              | Aug 11         |
+|                                               |            |                                             |                |
+|                                               | <--------- | "class" exercise --------->                 | Aug 11         |
+|                                               |            |                                             |                |
+|                                               |            | (no meeting)                                | Aug 18         |
+|                                               |            | (no meeting)                                | Aug 25         |
+|                                               |            |                                             |                |
+| daemon sets                                   |            | * Add logging/metrics to nodes              | Sep 01         |
 | logging, metrics                              |            |                                             |                |
-| pod autoscaling                               |            | * Add autoscaling config                    | Sep 01         |
+|                                               |            |                                             |                |
+| pod autoscaling                               |            | * Add autoscaling config                    | Sep 08         |
 | node autoscaling                              |            |                                             |                |
-|                                               | <--------- | "class" exercise ----------------------->   | Sep 08         |
-| jobs, cronjobs                                |            | * Add cronjob and data backup for todo data | Sep 15         |
+|                                               |            |                                             |                |
+|                                               | <--------- | "class" exercise --------->                 | Sep 15         |
+|                                               |            |                                             |                |
+| jobs, cronjobs                                |            | * Add cronjob and data backup for todo data | Sep 22         |
 | volume claims                                 |            |                                             |                |
-| helm                                          |            | * Add helm chart and real deploy pipeline   | Sep 22         |
+|                                               |            |                                             |                |
+| helm                                          |            | * Add helm chart and real deploy pipeline   | Sep 29         |
 | CI/CD                                         |            |                                             |                |
-|                                               | <--------- | "class" exercise ----------------------->   | Sep 29         |
-| Additional topics survey, e.g. service mesh ? |            | -                                           | Oct06          |
+|                                               |            |                                             |                |
+|                                               | <--------- | "class" exercise --------->                 | Oct 06         |
+|                                               |            |                                             |                |
+| Additional topics survey, e.g. service mesh ? |            | -                                           | Oct 13         |
