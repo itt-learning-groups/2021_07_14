@@ -1,0 +1,7 @@
+cmd/todo_api_server/todo_api_server
+.idea/*
+test-unit.log
+node_modules
+cov.out
+coverage.html
+PRIVATE_README.md
