@@ -6,7 +6,7 @@
 * Understand liveness/readiness probes.
 * Understand resource requests and limits... and go looking for trouble scaling beyond our means.
 * Diagnose and solve an additional scaling limitation.
-* Understand deployment strategies (e.g. "rollout") and deployment rollback.
+* Understand deployment strategies (rolling update) and deployment rollback.
 * Understand how to troubleshoot a couple of (additional) failure scenarios... time allowing.
 * Understand the k8s object/concept landscape at a high level, our roadmap through these for the next 10-12 sessions, and where we're at on that roadmap so far.
 
