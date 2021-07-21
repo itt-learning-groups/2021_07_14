@@ -61,7 +61,7 @@ I.e. your replicas are guaranteed by the scheduler to reserve the requested pod 
 
 We'll play a small game: See if you can use resources requests to over-allocate your worker nodes' available resources until the scheduler can no longer successfully support all of your replica pods.
 
-Check out [this doc](https://kountinc.atlassian.net/wiki/spaces/KO/pages/8085409904/Kount+One+30+000+foot+view) on how k8s defines CPU and memory units for the resource requests. There's also a helpful example of how to add a request to a container spec. (Note that resource *limits* are a related but different topic... which we'll get to in a minute.)
+Check out [this doc](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) on how k8s defines CPU and memory units for the resource requests. There's also a helpful example of how to add a request to a container spec. (Note that resource *limits* are a related but different topic... which we'll get to in a minute.)
 
 * You can get an idea of what the resources requests are for [running containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) in your cluster right now. That is pod information, so you ask kubectl for info about *pods* to get info on resources. This will show you a list for all running containers *if they have resource requests specified*: `kubectl get pods -o=jsonpath='{.items..resources.requests}' --all-namespaces`
 * Note that all these are in the kube-system namespace, though: `kubectl get pods -o=jsonpath='{.items..resources.requests}' -n kube-system`
